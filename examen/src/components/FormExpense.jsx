@@ -1,9 +1,13 @@
 import { useForm } from 'react-hook-form';
 import {dataLabel,categoryList} from "../data"
 import InputButton from './input';
+import ExpenseList from './ExpenseList';
+import { useState } from 'react';
 
 
 const FormExpense = () =>{
+    const [expenses, setExpenses] = useState([]);
+
     const {
         register,
         handleSubmit,
@@ -14,23 +18,28 @@ const FormExpense = () =>{
       
 
       const onSubmit = (data) => {
-        console.log(data); 
+        const { description, amount, category } = data;
+        const newExpense = { description, amount, category };
+        setExpenses(newExpense);
+        console.log(expenses.description)
     };
+        
       
       
 
     return(
-    <form onSubmit={handleSubmit(onSubmit)}  >
+        <>
+    <div><form onSubmit={handleSubmit(onSubmit)}  >
         <div>
             <label>{dataLabel.description} </label>
-            <input type="text" {...register('description', {require:true})}  name="decription"/>
+            <input type="text" {...register('description', {require:true})}  />
             
         </div>
         {errors.name && <p style={{ color: 'red' }}>Name is mandatory</p>}
        
         <div>
             <label>{dataLabel.amount}</label>
-            <input type="number" {...register('amount', {require:true})}  name="amount" />
+            <input type="number" {...register('amount', {require:true})} />
            
         </div>
         {errors.name && <p style={{ color: 'red' }}>Name is mandatory</p>}
@@ -38,7 +47,7 @@ const FormExpense = () =>{
     
         <div>
             <p>{dataLabel.category}</p>
-            <select name="category" {...register('category', {require:true})} >
+            <select  {...register('category', {require:true})} >
                 <option >{categoryList.Groceries}</option>
                 <option >{categoryList.Utilities}</option>
                 <option >{categoryList.Entertainment}</option>
@@ -47,7 +56,14 @@ const FormExpense = () =>{
         </div>
        
         <InputButton/>
-    </form>
+    </form> </div>
+
+        <div>
+            <ExpenseList  expenses={expenses} />
+        </div>
+   
+    
+    </>
     )
 }
 

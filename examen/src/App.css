@@ -36,3 +36,17 @@
     transform: rotate(360deg);
   }
 }
+
+#allcat{
+  display: flex;
+  flex-direction: row;
+  margin-top: 20px;
+}
+
+#desc{
+  margin-right: 20px;
+}
+
+#amount{
+  margin-right: 20px;
+}
